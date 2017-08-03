@@ -16,12 +16,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ActivityMain extends AppCompatActivity {
-  
+
+  private boolean isTwoPanel;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-  
+
+    /* Fetch API Content Here */
     Fetcher theFetcher = new Fetcher();
     APIEndpoint theEndpoint = theFetcher.getFetcher().create(APIEndpoint.class);
     
@@ -48,5 +51,6 @@ public class ActivityMain extends AppCompatActivity {
         Log.e("RECIPE", "onFailure: " + t.toString());
       }
     });
+    /* End of Fetch API Content */
   }
 }
