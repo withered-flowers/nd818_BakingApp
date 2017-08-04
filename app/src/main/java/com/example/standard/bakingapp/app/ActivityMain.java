@@ -2,6 +2,8 @@ package com.example.standard.bakingapp.app;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.example.standard.bakingapp.R;
@@ -19,10 +21,15 @@ public class ActivityMain extends AppCompatActivity {
 
   private boolean isTwoPanel;
 
+  private RecyclerView rvwListRecipe;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+
+    rvwListRecipe = (RecyclerView) findViewById(R.id.content_frame_recipe_list);
+    rvwListRecipe.setHasFixedSize(true);
 
     /* Fetch API Content Here */
     Fetcher theFetcher = new Fetcher();
@@ -33,14 +40,17 @@ public class ActivityMain extends AppCompatActivity {
     callListRecipe.enqueue(new Callback<List<Recipe>>() {
       @Override
       public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
-        List<Recipe> theRecipe = response.body();
+        List<Recipe> listRecipe = response.body();
         
-        if(theRecipe != null) {
+        if(listRecipe != null) {
           String allRecipeName = "";
 
-          for(int i=0; i<theRecipe.size(); i++) {
-            allRecipeName += theRecipe.get(i).getRecipeName() + ", ";
+          for(int i=0; i<listRecipe.size(); i++) {
+            allRecipeName += listRecipe.get(i).getRecipeName() + ", ";
           }
+
+          rvwListRecipe.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+          rvwListRecipe.setAdapter(new AdapterRecipeList(listRecipe));
 
           Log.d("RECIPE", "onResponse: " + allRecipeName);
         }
