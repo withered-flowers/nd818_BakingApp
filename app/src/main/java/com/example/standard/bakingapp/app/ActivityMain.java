@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import com.example.standard.bakingapp.R;
 import com.example.standard.bakingapp.backend.pojo.Recipe;
@@ -17,16 +19,26 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ActivityMain extends AppCompatActivity {
+public class ActivityMain extends AppCompatActivity
+  implements AdapterRecipeList.clickHandler {
 
   private boolean isTwoPanel;
 
   private RecyclerView rvwListRecipe;
 
   @Override
+  public void onCardViewClick(Recipe obj) {
+    Toast.makeText(getApplicationContext(), obj.getRecipeName(), Toast.LENGTH_LONG).show();
+  }
+
+  @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+
+    if(findViewById(R.id.content_frame_recipe_detail) != null) {
+      isTwoPanel = true;
+    }
 
     rvwListRecipe = (RecyclerView) findViewById(R.id.content_frame_recipe_list);
     rvwListRecipe.setHasFixedSize(true);
@@ -49,8 +61,11 @@ public class ActivityMain extends AppCompatActivity {
             allRecipeName += listRecipe.get(i).getRecipeName() + ", ";
           }
 
+          AdapterRecipeList adpRecipeList = new AdapterRecipeList(listRecipe);
+          adpRecipeList.setOnCardViewClick(ActivityMain.this);
+
           rvwListRecipe.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-          rvwListRecipe.setAdapter(new AdapterRecipeList(listRecipe));
+          rvwListRecipe.setAdapter(adpRecipeList);
 
           Log.d("RECIPE", "onResponse: " + allRecipeName);
         }
