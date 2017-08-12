@@ -7,8 +7,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import com.example.standard.bakingapp.R;
 import com.example.standard.bakingapp.backend.pojo.Recipe;
@@ -22,14 +20,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ActivityMain extends AppCompatActivity
-  implements AdapterRecipeList.clickHandler {
+    implements AdapterRecipeList.clickHandler {
 
   private static final String PARCEL_TAG = "RECIPE";
   private RecyclerView rvwListRecipe;
 
   @Override
   public void onClickAdapterRecipeList(Recipe obj) {
-    //Toast.makeText(getApplicationContext(), obj.getRecipeName(), Toast.LENGTH_LONG).show();
     Bundle bundle = new Bundle();
     bundle.putParcelable(PARCEL_TAG, obj);
 
@@ -50,37 +47,27 @@ public class ActivityMain extends AppCompatActivity
     /* Fetch API Content Here */
     Fetcher theFetcher = new Fetcher();
     APIEndpoint theEndpoint = theFetcher.getFetcher().create(APIEndpoint.class);
-    
+
     Call<List<Recipe>> callListRecipe = theEndpoint.getListRecipe("android-baking-app-json");
-    
+
     callListRecipe.enqueue(new Callback<List<Recipe>>() {
       @Override
       public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
         List<Recipe> listRecipe = response.body();
-        
-        if(listRecipe != null) {
-          String allRecipeName = "";
 
-          for(int i=0; i<listRecipe.size(); i++) {
-            allRecipeName += listRecipe.get(i).getRecipeName() + ", ";
-          }
-
+        if (listRecipe != null) {
           AdapterRecipeList adpRecipeList = new AdapterRecipeList(listRecipe);
           adpRecipeList.setOnCardViewClick(ActivityMain.this);
 
-          if(getApplicationContext().getResources().getBoolean(R.bool.should_use_multi_grid)) {
+          if (getApplicationContext().getResources().getBoolean(R.bool.should_use_multi_grid)) {
             rvwListRecipe.setLayoutManager(new GridLayoutManager(getApplicationContext(), 3));
-          }
-          else {
+          } else {
             rvwListRecipe.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
           }
           rvwListRecipe.setAdapter(adpRecipeList);
-
-          //Log for debug
-          //Log.d("RECIPE", "onResponse: " + allRecipeName);
         }
       }
-  
+
       @Override
       public void onFailure(Call<List<Recipe>> call, Throwable t) {
         Log.e("RECIPE", "onFailure: " + t.toString());

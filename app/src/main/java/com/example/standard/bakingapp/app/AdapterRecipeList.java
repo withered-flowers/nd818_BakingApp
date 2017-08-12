@@ -47,7 +47,7 @@ public class AdapterRecipeList extends RecyclerView.Adapter<AdapterRecipeList.Ad
     holder.cardRecipe.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        if(listener != null) {
+        if (listener != null) {
           listener.onClickAdapterRecipeList(listRecipe.get(holder.getAdapterPosition()));
         }
       }
