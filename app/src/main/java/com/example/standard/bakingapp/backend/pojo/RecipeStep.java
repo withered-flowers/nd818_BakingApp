@@ -1,8 +1,11 @@
 package com.example.standard.bakingapp.backend.pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class RecipeStep {
+public class RecipeStep implements Parcelable {
   @SerializedName("id")
   private int stepId;
 
@@ -17,7 +20,7 @@ public class RecipeStep {
 
   @SerializedName("thumbnailURL")
   private String stepThumbnailURL;
-  
+
   public int getStepId() {
     return stepId;
   }
@@ -56,5 +59,40 @@ public class RecipeStep {
   
   public void setStepThumbnailURL(String stepThumbnailURL) {
     this.stepThumbnailURL = stepThumbnailURL;
+  }
+
+  public static final Creator<RecipeStep> CREATOR = new Creator<RecipeStep>() {
+    @Override
+    public RecipeStep createFromParcel(Parcel in) {
+      return new RecipeStep(in);
+    }
+
+    @Override
+    public RecipeStep[] newArray(int size) {
+      return new RecipeStep[size];
+    }
+  };
+
+  @Override
+  public int describeContents() {
+    return 0;
+  }
+
+  @Override
+  public void writeToParcel(Parcel dest, int flags) {
+    dest.writeInt(getStepId());
+    dest.writeString(getStepShortDescription());
+    dest.writeString(getStepDescription());
+    dest.writeString(getStepVideoURL());
+    dest.writeString(getStepThumbnailURL());
+  }
+
+  public RecipeStep() {}
+  public RecipeStep(Parcel in) {
+    setStepId(in.readInt());
+    setStepDescription(in.readString());
+    setStepDescription(in.readString());
+    setStepVideoURL(in.readString());
+    setStepThumbnailURL(in.readString());
   }
 }

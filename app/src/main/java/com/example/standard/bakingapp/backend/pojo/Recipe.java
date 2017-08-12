@@ -1,5 +1,8 @@
 package com.example.standard.bakingapp.backend.pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -9,7 +12,7 @@ import java.util.List;
   URL - ORIGINAL   : https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json
 */
 
-public class Recipe {
+public class Recipe implements Parcelable {
   @SerializedName("id")
   private int recipeId;
 
@@ -27,7 +30,7 @@ public class Recipe {
   
   @SerializedName("image")
   private String recipeImage;
-  
+
   public int getRecipeId() {
     return recipeId;
   }
@@ -74,5 +77,42 @@ public class Recipe {
   
   public void setRecipeImage(String recipeImage) {
     this.recipeImage = recipeImage;
+  }
+
+  public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
+    @Override
+    public Recipe createFromParcel(Parcel in) {
+      return new Recipe(in);
+    }
+
+    @Override
+    public Recipe[] newArray(int size) {
+      return new Recipe[size];
+    }
+  };
+
+  @Override
+  public int describeContents() {
+    return 0;
+  }
+
+  @Override
+  public void writeToParcel(Parcel dest, int flags) {
+    dest.writeInt(getRecipeId());
+    dest.writeString(getRecipeName());
+    dest.writeList(getRecipeListIngredients());
+    dest.writeList(getRecipeListSteps());
+    dest.writeInt(getRecipeServings());
+    dest.writeString(getRecipeImage());
+  }
+
+  public Recipe() {}
+  public Recipe(Parcel in) {
+    setRecipeId(in.readInt());
+    setRecipeName(in.readString());
+    in.readList(recipeListIngredients, List.class.getClassLoader());
+    in.readList(recipeListSteps, List.class.getClassLoader());
+    setRecipeServings(in.readInt());
+    setRecipeImage(in.readString());
   }
 }
