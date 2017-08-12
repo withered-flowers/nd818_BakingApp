@@ -1,7 +1,9 @@
 package com.example.standard.bakingapp.app;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,23 +24,25 @@ import retrofit2.Response;
 public class ActivityMain extends AppCompatActivity
   implements AdapterRecipeList.clickHandler {
 
-  private boolean isTwoPanel;
-
+  private static final String PARCEL_TAG = "RECIPE";
   private RecyclerView rvwListRecipe;
 
   @Override
-  public void onCardViewClick(Recipe obj) {
-    Toast.makeText(getApplicationContext(), obj.getRecipeName(), Toast.LENGTH_LONG).show();
+  public void onClickAdapterRecipeList(Recipe obj) {
+    //Toast.makeText(getApplicationContext(), obj.getRecipeName(), Toast.LENGTH_LONG).show();
+    Bundle bundle = new Bundle();
+    bundle.putParcelable(PARCEL_TAG, obj);
+
+    Intent i = new Intent(this, ActivityDetail.class);
+    i.putExtras(bundle);
+
+    startActivity(i);
   }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-
-    if(findViewById(R.id.content_frame_recipe_detail) != null) {
-      isTwoPanel = true;
-    }
 
     rvwListRecipe = (RecyclerView) findViewById(R.id.content_frame_recipe_list);
     rvwListRecipe.setHasFixedSize(true);
@@ -64,10 +68,16 @@ public class ActivityMain extends AppCompatActivity
           AdapterRecipeList adpRecipeList = new AdapterRecipeList(listRecipe);
           adpRecipeList.setOnCardViewClick(ActivityMain.this);
 
-          rvwListRecipe.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+          if(getApplicationContext().getResources().getBoolean(R.bool.should_use_multi_grid)) {
+            rvwListRecipe.setLayoutManager(new GridLayoutManager(getApplicationContext(), 3));
+          }
+          else {
+            rvwListRecipe.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+          }
           rvwListRecipe.setAdapter(adpRecipeList);
 
-          Log.d("RECIPE", "onResponse: " + allRecipeName);
+          //Log for debug
+          //Log.d("RECIPE", "onResponse: " + allRecipeName);
         }
       }
   

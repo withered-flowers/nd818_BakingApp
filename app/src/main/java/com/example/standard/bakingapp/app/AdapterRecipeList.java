@@ -18,7 +18,7 @@ public class AdapterRecipeList extends RecyclerView.Adapter<AdapterRecipeList.Ad
   private List<Recipe> listRecipe;
 
   public interface clickHandler {
-    void onCardViewClick(Recipe obj);
+    void onClickAdapterRecipeList(Recipe obj);
   }
 
   public AdapterRecipeList(List<Recipe> listRecipe) {
@@ -48,7 +48,7 @@ public class AdapterRecipeList extends RecyclerView.Adapter<AdapterRecipeList.Ad
       @Override
       public void onClick(View v) {
         if(listener != null) {
-          listener.onCardViewClick(listRecipe.get(holder.getAdapterPosition()));
+          listener.onClickAdapterRecipeList(listRecipe.get(holder.getAdapterPosition()));
         }
       }
     });
