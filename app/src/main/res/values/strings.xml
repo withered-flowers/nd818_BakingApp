@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Baking App</string>
+
     <string name="activity_detail_title">Recipe Detail</string>
+    <string name="activity_detail_textview_ingredient">Ingredients</string>
+    <string name="activity_detail_textview_step">Steps</string>
 </resources>

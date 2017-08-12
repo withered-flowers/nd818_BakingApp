@@ -4,4 +4,11 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+  <TextView
+    android:id="@+id/content_frame_recipe_textview_item_left"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textSize="12sp"
+    android:text="Testing"/>
+
 </LinearLayout>
