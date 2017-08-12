@@ -2,13 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="wrap_content">
 
-  <TextView
+  <Button
     android:id="@+id/content_frame_recipe_textview_item_left"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textSize="12sp"
-    android:text="Testing"/>
+    android:textSize="12sp"/>
 
 </LinearLayout>

@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.standard.bakingapp.R;
@@ -31,7 +32,7 @@ public class AdapterRecipeDetail_Left extends RecyclerView.Adapter<AdapterRecipe
   @Override
   public AdapterRecipeDetail_Left_ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-    int idLayout = android.R.layout.simple_list_item_1;
+    int idLayout = R.layout.content_recipe_detail_item_left;
 
     View view = inflater.inflate(idLayout, parent, false);
 
@@ -40,24 +41,30 @@ public class AdapterRecipeDetail_Left extends RecyclerView.Adapter<AdapterRecipe
 
   @Override
   public void onBindViewHolder(AdapterRecipeDetail_Left_ViewHolder holder, int position) {
-    final RecipeStep currentRecipeStep = listRecipeStep.get(position);
+    if(position == 0) {
+      holder.btnRecipeDetail.setText("Recipe Ingredients");
+    }
+    else if (position > 0) {
+      final RecipeStep currentRecipeStep = listRecipeStep.get(position-1);
 
-    Log.d(TAG, "onBindViewHolder: " + currentRecipeStep.getStepDescription());
+      //Log.d(TAG, "onBindViewHolder: " + currentRecipeStep.getStepDescription());
 
-    holder.tvRecipeDetail.setText(currentRecipeStep.getStepShortDescription());
+      holder.btnRecipeDetail.setText(currentRecipeStep.getStepDescription());
+    }
   }
 
   @Override
   public int getItemCount() {
-    return listRecipeStep.size();
+    return listRecipeStep.size()+1;
   }
 
-  static class AdapterRecipeDetail_Left_ViewHolder extends RecyclerView.ViewHolder {
-    TextView tvRecipeDetail;
+  public class AdapterRecipeDetail_Left_ViewHolder extends RecyclerView.ViewHolder {
+    final Button btnRecipeDetail;
 
     public AdapterRecipeDetail_Left_ViewHolder(View itemView) {
       super(itemView);
-      tvRecipeDetail = (TextView) itemView.findViewById(android.R.id.text1);
+
+      btnRecipeDetail = (Button) itemView.findViewById(R.id.content_frame_recipe_textview_item_left);
     }
   }
 }

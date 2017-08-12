@@ -91,7 +91,7 @@ public class RecipeStep implements Parcelable {
   public RecipeStep(Parcel in) {
     setStepId(in.readInt());
     setStepDescription(in.readString());
-    setStepDescription(in.readString());
+    setStepShortDescription(in.readString());
     setStepVideoURL(in.readString());
     setStepThumbnailURL(in.readString());
   }
