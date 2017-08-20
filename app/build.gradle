@@ -45,5 +45,10 @@ dependencies {
     //Picasso 3rd Party
     compile 'com.squareup.picasso:picasso:2.5.2'
 
+    //Exoplayer 3rd Party
+    compile 'com.google.android.exoplayer:exoplayer-core:r2.4.4'
+    compile 'com.google.android.exoplayer:exoplayer-dash:r2.4.4'
+    compile 'com.google.android.exoplayer:exoplayer-ui:r2.4.4'
+
     testCompile 'junit:junit:4.12'
 }
