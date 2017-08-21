@@ -29,14 +29,24 @@ public class ActivityDetail extends AppCompatActivity
 
   @Override
   public void onClickAdapterRecipeDetailLeft(RecipeStep recipeStep, int position) {
-    String theText;
     if(recipeStep == null) {
-      theText = "Recipe Ingredient";
+      //RECIPE INGREDIENT HERE
+      if(isTwoPanel) {
+        //TODO TWO PANEL RECIPE INGREDIENT HERE
+      }
+      else {
+        //TODO ONE PANEL (CHANGE ACTIVITY) RECIPE INGREDIENT HERE
+      }
     }
     else {
-      theText = recipeStep.getStepShortDescription();
+      //RECIPE STEP HERE
+      if(isTwoPanel) {
+        //TODO TWO PANEL RECIPE STEP HERE
+      }
+      else {
+        //TODO ONE PANEL (CHANGE ACTIVITY) RECIPE INGREDIENT HERE
+      }
     }
-    Toast.makeText(getApplicationContext(), theText, Toast.LENGTH_SHORT).show();
   }
 
   @Override
