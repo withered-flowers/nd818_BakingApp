@@ -17,7 +17,6 @@
       android:theme="@style/AppTheme.NoActionBar">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
-
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
@@ -26,7 +25,9 @@
       android:label="@string/activity_detail_title"
       android:theme="@style/AppTheme.NoActionBar">
     </activity>
-    <activity android:name=".app.ActivityStep">
+    <activity
+      android:name=".app.ActivityStep"
+      android:theme="@style/AppTheme.NoActionBar">
     </activity>
   </application>
 
