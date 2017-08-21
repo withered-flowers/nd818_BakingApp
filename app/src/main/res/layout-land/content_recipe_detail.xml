@@ -12,14 +12,14 @@
   tools:context="com.example.standard.bakingapp.app.ActivityDetail">
 
   <android.support.v7.widget.RecyclerView
-    android:id="@+id/content_frame_recipe_detail"
+    android:id="@+id/content_recipe_detail_framerecipe"
     android:layout_width="@dimen/item_width"
     android:layout_height="match_parent"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"/>
 
   <FrameLayout
-    android:id="@+id/content_frame_step_detail"
+    android:id="@+id/content_recipe_detail_framestep"
     android:layout_width="0dp"
     android:layout_height="match_parent"
     android:layout_marginEnd="16dp"

@@ -66,8 +66,8 @@ public class AdapterRecipeList extends RecyclerView.Adapter<AdapterRecipeList.Ad
     public AdapterRecipeListViewHolder(View itemView) {
       super(itemView);
 
-      cardRecipe = (CardView) itemView.findViewById(R.id.content_frame_recipe_list_item_cardrecipe);
-      cardRecipeText = (TextView) itemView.findViewById(R.id.content_frame_recipe_list_item_cardrecipe_text);
+      cardRecipe = (CardView) itemView.findViewById(R.id.content_recipe_list_item_cardrecipe);
+      cardRecipeText = (TextView) itemView.findViewById(R.id.content_recipe_list_item_cardrecipe_text);
     }
   }
 }

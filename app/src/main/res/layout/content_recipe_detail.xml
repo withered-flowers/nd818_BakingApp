@@ -14,7 +14,7 @@
   tools:context="com.example.standard.bakingapp.app.ActivityDetail">
 
   <android.support.v7.widget.RecyclerView
-    android:id="@+id/content_frame_recipe_detail"
+    android:id="@+id/content_recipe_detail_framerecipe"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginLeft="16dp"

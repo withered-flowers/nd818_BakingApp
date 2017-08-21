@@ -41,7 +41,7 @@ public class ActivityMain extends AppCompatActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    rvwListRecipe = (RecyclerView) findViewById(R.id.content_frame_recipe_list);
+    rvwListRecipe = (RecyclerView) findViewById(R.id.content_recipe_list_frame);
     rvwListRecipe.setHasFixedSize(true);
 
     /* Fetch API Content Here */

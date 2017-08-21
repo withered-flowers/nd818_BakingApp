@@ -20,12 +20,21 @@ import static android.content.ContentValues.TAG;
  */
 
 public class AdapterRecipeDetailLeft extends RecyclerView.Adapter<AdapterRecipeDetailLeft.AdapterRecipeDetailLeftViewHolder> {
+  private clickHandler listener;
   private List<RecipeStep> listRecipeStep;
+
+  public interface clickHandler {
+    void onClickAdapterRecipeDetailLeft(RecipeStep recipeStep, int position);
+  }
 
   public AdapterRecipeDetailLeft(List<RecipeStep> listRecipeStep) {
     this.listRecipeStep = new ArrayList<>();
     this.listRecipeStep.addAll(listRecipeStep);
     Log.d(TAG, String.valueOf(listRecipeStep.size()));
+  }
+
+  public void setOnListItemViewClick(clickHandler listener) {
+    this.listener = listener;
   }
 
   @Override
@@ -39,13 +48,24 @@ public class AdapterRecipeDetailLeft extends RecyclerView.Adapter<AdapterRecipeD
   }
 
   @Override
-  public void onBindViewHolder(AdapterRecipeDetailLeftViewHolder holder, int position) {
+  public void onBindViewHolder(final AdapterRecipeDetailLeftViewHolder holder, int position) {
     if (position == 0) {
       holder.tvRecipeDetail.setText("Recipe Ingredients");
     } else if (position > 0) {
       final RecipeStep currentRecipeStep = listRecipeStep.get(position - 1);
       holder.tvRecipeDetail.setText(currentRecipeStep.getStepDescription());
     }
+
+    holder.vwRecipeDetail.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if(listener != null) {
+          listener.onClickAdapterRecipeDetailLeft(
+              listRecipeStep.get(holder.getAdapterPosition()), holder.getAdapterPosition()
+          );
+        }
+      }
+    });
   }
 
   @Override
@@ -54,12 +74,14 @@ public class AdapterRecipeDetailLeft extends RecyclerView.Adapter<AdapterRecipeD
   }
 
   public class AdapterRecipeDetailLeftViewHolder extends RecyclerView.ViewHolder {
+    final View vwRecipeDetail;
     final TextView tvRecipeDetail;
 
     public AdapterRecipeDetailLeftViewHolder(View itemView) {
       super(itemView);
 
-      tvRecipeDetail = (TextView) itemView.findViewById(R.id.content_frame_recipe_textview_item_left);
+      vwRecipeDetail = itemView.findViewById(R.id.content_recipe_detail_item_left_container);
+      tvRecipeDetail = (TextView) itemView.findViewById(R.id.content_recipe_detail_item_left_textview);
     }
   }
 }

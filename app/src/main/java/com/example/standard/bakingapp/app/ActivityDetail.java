@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.example.standard.bakingapp.R;
 import com.example.standard.bakingapp.backend.pojo.Recipe;
@@ -31,8 +30,8 @@ public class ActivityDetail extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_detail);
 
-    isTwoPanel = findViewById(R.id.content_frame_step_detail) != null;
-    rvwRecipeDetail = (RecyclerView) findViewById(R.id.content_frame_recipe_detail);
+    isTwoPanel = findViewById(R.id.content_recipe_detail_framestep) != null;
+    rvwRecipeDetail = (RecyclerView) findViewById(R.id.content_recipe_detail_framerecipe);
     rvwRecipeDetail.setHasFixedSize(true);
 
     if (getIntent().getExtras() != null) {
