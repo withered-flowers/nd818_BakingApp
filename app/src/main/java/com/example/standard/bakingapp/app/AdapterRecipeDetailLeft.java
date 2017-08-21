@@ -59,13 +59,12 @@ class AdapterRecipeDetailLeft extends RecyclerView.Adapter<AdapterRecipeDetailLe
     holder.vwRecipeDetail.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        if(listener != null) {
-          if(holder.getAdapterPosition() == 0) {
+        if (listener != null) {
+          if (holder.getAdapterPosition() == 0) {
             listener.onClickAdapterRecipeDetailLeft(
                 null, holder.getAdapterPosition()
             );
-          }
-          else {
+          } else {
             listener.onClickAdapterRecipeDetailLeft(
                 listRecipeStep.get(holder.getAdapterPosition() - 1), holder.getAdapterPosition()
             );

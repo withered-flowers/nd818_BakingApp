@@ -21,52 +21,38 @@ import java.util.List;
  */
 
 public class ActivityDetail extends AppCompatActivity
-  implements AdapterRecipeDetailLeft.clickHandler {
+    implements AdapterRecipeDetailLeft.clickHandler {
 
   private boolean isTwoPanel;
 
   private RecyclerView rvwRecipeDetail;
-  private String textIngredients = "";
-
-  private List<RecipeIngredient> ing;
+  private List<RecipeIngredient> currentRecipeListIngredients;
 
   @Override
   public void onClickAdapterRecipeDetailLeft(RecipeStep recipeStep, int position) {
     Bundle bundle = new Bundle();
 
-    /*
-    if(recipeStep == null) {
-      bundle.putString(StaticValue.PARCEL_TAG_03, textIngredients);
+
+    if (recipeStep == null) {
+      bundle.putParcelableArrayList(StaticValue.PARCEL_TAG_03, new ArrayList<Parcelable>(currentRecipeListIngredients));
 
       //RECIPE INGREDIENT HERE
-      if(isTwoPanel) {
+      if (isTwoPanel) {
         //TODO TWO PANEL RECIPE INGREDIENT HERE
-      }
-      else {
+      } else {
         //TODO ONE PANEL (CHANGE ACTIVITY) RECIPE INGREDIENT HERE
         Intent i = new Intent(this, ActivityStep.class);
         i.putExtras(bundle);
 
         startActivity(i);
       }
-    }
-    */
-    if(recipeStep == null) {
-      bundle.putParcelableArrayList("INGREDIENT_ARRAY", new ArrayList<Parcelable>(ing));
-
-      Intent i = new Intent(this, ActivityStep.class);
-      i.putExtras(bundle);
-
-      startActivity(i);
-    }
-    else {
+    } else {
       //RECIPE STEP HERE
       bundle.putParcelable(StaticValue.PARCEL_TAG_02, recipeStep);
 
-      if(isTwoPanel) {
+      if (isTwoPanel) {
         //TODO TWO PANEL RECIPE STEP HERE
-      }
-      else {
+      } else {
         //TODO ONE PANEL (CHANGE ACTIVITY) RECIPE STEP HERE
         Intent i = new Intent(this, ActivityStep.class);
         i.putExtras(bundle);
@@ -89,17 +75,8 @@ public class ActivityDetail extends AppCompatActivity
       Recipe currentRecipe = getIntent().getExtras().getParcelable(StaticValue.PARCEL_TAG_01);
 
       if (currentRecipe != null) {
-        List<RecipeIngredient> currentRecipeListIngredients = currentRecipe.getRecipeListIngredients();
+        currentRecipeListIngredients = currentRecipe.getRecipeListIngredients();
         List<RecipeStep> currentRecipeListSteps = currentRecipe.getRecipeListSteps();
-
-        ing = currentRecipeListIngredients;
-
-        for(int i=0; i<currentRecipeListIngredients.size(); i++) {
-          textIngredients += currentRecipeListIngredients.get(i).getIngredientQuantity() + " ";
-          textIngredients += currentRecipeListIngredients.get(i).getIngredientMeasure() + " ";
-          textIngredients += "of ";
-          textIngredients += currentRecipeListIngredients.get(i).getIngredientName() + "\n";
-        }
 
         AdapterRecipeDetailLeft adpRecipeDetail_Left = new AdapterRecipeDetailLeft(currentRecipeListSteps);
         adpRecipeDetail_Left.setOnListItemViewClick(ActivityDetail.this);
