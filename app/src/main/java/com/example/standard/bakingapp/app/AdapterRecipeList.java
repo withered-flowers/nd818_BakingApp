@@ -12,20 +12,20 @@ import com.example.standard.bakingapp.backend.pojo.Recipe;
 
 import java.util.List;
 
-public class AdapterRecipeList extends RecyclerView.Adapter<AdapterRecipeList.AdapterRecipeListViewHolder> {
+class AdapterRecipeList extends RecyclerView.Adapter<AdapterRecipeList.AdapterRecipeListViewHolder> {
 
   private clickHandler listener;
   private List<Recipe> listRecipe;
 
-  public interface clickHandler {
+  interface clickHandler {
     void onClickAdapterRecipeList(Recipe obj);
   }
 
-  public AdapterRecipeList(List<Recipe> listRecipe) {
+  AdapterRecipeList(List<Recipe> listRecipe) {
     this.listRecipe = listRecipe;
   }
 
-  public void setOnCardViewClick(clickHandler listener) {
+  void setOnCardViewClick(clickHandler listener) {
     this.listener = listener;
   }
 
@@ -59,11 +59,11 @@ public class AdapterRecipeList extends RecyclerView.Adapter<AdapterRecipeList.Ad
     return listRecipe.size();
   }
 
-  public class AdapterRecipeListViewHolder extends RecyclerView.ViewHolder {
-    public final CardView cardRecipe;
-    public final TextView cardRecipeText;
+  class AdapterRecipeListViewHolder extends RecyclerView.ViewHolder {
+    final CardView cardRecipe;
+    final TextView cardRecipeText;
 
-    public AdapterRecipeListViewHolder(View itemView) {
+    AdapterRecipeListViewHolder(View itemView) {
       super(itemView);
 
       cardRecipe = (CardView) itemView.findViewById(R.id.content_recipe_list_item_cardrecipe);

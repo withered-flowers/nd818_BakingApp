@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.standard.bakingapp.R;
 import com.example.standard.bakingapp.backend.pojo.Recipe;
@@ -17,13 +18,26 @@ import java.util.List;
  * Created by standard on 8/12/17.
  */
 
-public class ActivityDetail extends AppCompatActivity {
+public class ActivityDetail extends AppCompatActivity
+  implements AdapterRecipeDetailLeft.clickHandler {
 
   private static final String PARCEL_TAG = "RECIPE";
 
   private boolean isTwoPanel;
 
   private RecyclerView rvwRecipeDetail;
+
+  @Override
+  public void onClickAdapterRecipeDetailLeft(RecipeStep recipeStep, int position) {
+    String theText;
+    if(recipeStep == null) {
+      theText = "Recipe Ingredient";
+    }
+    else {
+      theText = recipeStep.getStepShortDescription();
+    }
+    Toast.makeText(getApplicationContext(), theText, Toast.LENGTH_SHORT).show();
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +58,8 @@ public class ActivityDetail extends AppCompatActivity {
         Log.d("TEST", String.valueOf(currentRecipeListSteps.size()));
 
         AdapterRecipeDetailLeft adpRecipeDetail_Left = new AdapterRecipeDetailLeft(currentRecipeListSteps);
+        adpRecipeDetail_Left.setOnListItemViewClick(ActivityDetail.this);
+
         rvwRecipeDetail.setLayoutManager(new LinearLayoutManager(this));
         rvwRecipeDetail.setAdapter(adpRecipeDetail_Left);
       }

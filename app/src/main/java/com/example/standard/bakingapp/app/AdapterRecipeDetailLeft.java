@@ -19,21 +19,21 @@ import static android.content.ContentValues.TAG;
  * Created by standard on 8/12/17.
  */
 
-public class AdapterRecipeDetailLeft extends RecyclerView.Adapter<AdapterRecipeDetailLeft.AdapterRecipeDetailLeftViewHolder> {
+class AdapterRecipeDetailLeft extends RecyclerView.Adapter<AdapterRecipeDetailLeft.AdapterRecipeDetailLeftViewHolder> {
   private clickHandler listener;
   private List<RecipeStep> listRecipeStep;
 
-  public interface clickHandler {
+  interface clickHandler {
     void onClickAdapterRecipeDetailLeft(RecipeStep recipeStep, int position);
   }
 
-  public AdapterRecipeDetailLeft(List<RecipeStep> listRecipeStep) {
+  AdapterRecipeDetailLeft(List<RecipeStep> listRecipeStep) {
     this.listRecipeStep = new ArrayList<>();
     this.listRecipeStep.addAll(listRecipeStep);
     Log.d(TAG, String.valueOf(listRecipeStep.size()));
   }
 
-  public void setOnListItemViewClick(clickHandler listener) {
+  void setOnListItemViewClick(clickHandler listener) {
     this.listener = listener;
   }
 
@@ -60,9 +60,16 @@ public class AdapterRecipeDetailLeft extends RecyclerView.Adapter<AdapterRecipeD
       @Override
       public void onClick(View v) {
         if(listener != null) {
-          listener.onClickAdapterRecipeDetailLeft(
-              listRecipeStep.get(holder.getAdapterPosition()), holder.getAdapterPosition()
-          );
+          if(holder.getAdapterPosition() == 0) {
+            listener.onClickAdapterRecipeDetailLeft(
+                null, holder.getAdapterPosition()
+            );
+          }
+          else {
+            listener.onClickAdapterRecipeDetailLeft(
+                listRecipeStep.get(holder.getAdapterPosition() - 1), holder.getAdapterPosition()
+            );
+          }
         }
       }
     });
@@ -73,11 +80,11 @@ public class AdapterRecipeDetailLeft extends RecyclerView.Adapter<AdapterRecipeD
     return listRecipeStep.size() + 1;
   }
 
-  public class AdapterRecipeDetailLeftViewHolder extends RecyclerView.ViewHolder {
+  class AdapterRecipeDetailLeftViewHolder extends RecyclerView.ViewHolder {
     final View vwRecipeDetail;
     final TextView tvRecipeDetail;
 
-    public AdapterRecipeDetailLeftViewHolder(View itemView) {
+    AdapterRecipeDetailLeftViewHolder(View itemView) {
       super(itemView);
 
       vwRecipeDetail = itemView.findViewById(R.id.content_recipe_detail_item_left_container);
