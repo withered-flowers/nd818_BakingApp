@@ -26,38 +26,25 @@ public class ActivityDetail extends AppCompatActivity
 
   private RecyclerView rvwRecipeDetail;
   private List<RecipeIngredient> currentRecipeListIngredients;
+  private List<RecipeStep> currentRecipeListSteps;
 
   @Override
-  public void onClickAdapterRecipeDetailLeft(RecipeStep recipeStep, int position) {
+  public void onClickAdapterRecipeDetailLeft(int position) {
     Bundle bundle = new Bundle();
 
+    bundle.putInt(StaticValue.KEY_INT_POSITION_CURR, position);
+    bundle.putInt(StaticValue.KEY_INT_POSITION_MAX, currentRecipeListSteps.size());
+    bundle.putParcelableArrayList(StaticValue.KEY_OBJECT_RECIPEINGREDIENT_ARRAY, new ArrayList<Parcelable>(currentRecipeListIngredients));
+    bundle.putParcelableArrayList(StaticValue.KEY_OBJECT_RECIPESTEP, new ArrayList<Parcelable>(currentRecipeListSteps));
 
-    if (recipeStep == null) {
-      bundle.putParcelableArrayList(StaticValue.KEY_OBJECT_RECIPEINGREDIENT_ARRAY, new ArrayList<Parcelable>(currentRecipeListIngredients));
-
-      //RECIPE INGREDIENT HERE
-      if (isTwoPanel) {
-        //TODO TWO PANEL RECIPE INGREDIENT HERE
-      } else {
-        //TODO ONE PANEL (CHANGE ACTIVITY) RECIPE INGREDIENT HERE
-        Intent i = new Intent(this, ActivityStep.class);
-        i.putExtras(bundle);
-
-        startActivity(i);
-      }
+    if (isTwoPanel) {
+      //TWO PANEL IMPLEMENTATION
     } else {
-      //RECIPE STEP HERE
-      bundle.putParcelable(StaticValue.KEY_OBJECT_RECIPESTEP, recipeStep);
+      //ONE PANEL IMPLEMENTATION
+      Intent i = new Intent(this, ActivityStep.class);
+      i.putExtras(bundle);
 
-      if (isTwoPanel) {
-        //TODO TWO PANEL RECIPE STEP HERE
-      } else {
-        //TODO ONE PANEL (CHANGE ACTIVITY) RECIPE STEP HERE
-        Intent i = new Intent(this, ActivityStep.class);
-        i.putExtras(bundle);
-
-        startActivity(i);
-      }
+      startActivity(i);
     }
   }
 
@@ -75,7 +62,7 @@ public class ActivityDetail extends AppCompatActivity
 
       if (currentRecipe != null) {
         currentRecipeListIngredients = currentRecipe.getRecipeListIngredients();
-        List<RecipeStep> currentRecipeListSteps = currentRecipe.getRecipeListSteps();
+        currentRecipeListSteps = currentRecipe.getRecipeListSteps();
 
         AdapterRecipeDetailLeft adpRecipeDetail_Left = new AdapterRecipeDetailLeft(currentRecipeListSteps);
         adpRecipeDetail_Left.setOnListItemViewClick(ActivityDetail.this);

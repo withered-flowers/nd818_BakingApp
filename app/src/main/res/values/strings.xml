@@ -5,6 +5,8 @@
   <string name="activity_detail_textview_ingredient">Ingredients</string>
   <string name="activity_detail_textview_step">Steps</string>
 
+  <string name="adapter_recipe_detail_left_recipeingredients">Recipe Ingredients</string>
+
   <string name="content_recipe_detail_item_right_recipelist">Recipe Ingredients</string>
   <string name="content_recipe_detail_item_right_buttonprev">Prev</string>
   <string name="content_recipe_detail_item_right_buttonnext">Next</string>

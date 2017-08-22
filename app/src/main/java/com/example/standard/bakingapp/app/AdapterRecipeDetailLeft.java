@@ -24,7 +24,7 @@ class AdapterRecipeDetailLeft extends RecyclerView.Adapter<AdapterRecipeDetailLe
   private List<RecipeStep> listRecipeStep;
 
   interface clickHandler {
-    void onClickAdapterRecipeDetailLeft(RecipeStep recipeStep, int position);
+    void onClickAdapterRecipeDetailLeft(int position);
   }
 
   AdapterRecipeDetailLeft(List<RecipeStep> listRecipeStep) {
@@ -50,7 +50,7 @@ class AdapterRecipeDetailLeft extends RecyclerView.Adapter<AdapterRecipeDetailLe
   @Override
   public void onBindViewHolder(final AdapterRecipeDetailLeftViewHolder holder, int position) {
     if (position == 0) {
-      holder.tvRecipeDetail.setText("Recipe Ingredients");
+      holder.tvRecipeDetail.setText(R.string.adapter_recipe_detail_left_recipeingredients);
     } else if (position > 0) {
       final RecipeStep currentRecipeStep = listRecipeStep.get(position - 1);
       holder.tvRecipeDetail.setText(currentRecipeStep.getStepDescription());
@@ -60,15 +60,7 @@ class AdapterRecipeDetailLeft extends RecyclerView.Adapter<AdapterRecipeDetailLe
       @Override
       public void onClick(View v) {
         if (listener != null) {
-          if (holder.getAdapterPosition() == 0) {
-            listener.onClickAdapterRecipeDetailLeft(
-                null, holder.getAdapterPosition()
-            );
-          } else {
-            listener.onClickAdapterRecipeDetailLeft(
-                listRecipeStep.get(holder.getAdapterPosition() - 1), holder.getAdapterPosition()
-            );
-          }
+          listener.onClickAdapterRecipeDetailLeft(holder.getAdapterPosition());
         }
       }
     });
