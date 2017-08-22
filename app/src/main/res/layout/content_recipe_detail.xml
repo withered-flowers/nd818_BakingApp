@@ -16,6 +16,6 @@
     android:id="@+id/content_recipe_detail_framerecipe"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"/>
+    android:layout_marginLeft="@dimen/layout_margin"
+    android:layout_marginRight="@dimen/layout_margin"/>
 </LinearLayout>

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <bool name="should_use_multi_grid">true</bool>
+  <dimen name="big_text_size">24sp</dimen>
+  <dimen name="exoplayer_height">300dp</dimen>
 </resources>

@@ -33,7 +33,7 @@ public class ActivityDetail extends AppCompatActivity
 
 
     if (recipeStep == null) {
-      bundle.putParcelableArrayList(StaticValue.PARCEL_TAG_03, new ArrayList<Parcelable>(currentRecipeListIngredients));
+      bundle.putParcelableArrayList(StaticValue.KEY_OBJECT_RECIPEINGREDIENT_ARRAY, new ArrayList<Parcelable>(currentRecipeListIngredients));
 
       //RECIPE INGREDIENT HERE
       if (isTwoPanel) {
@@ -47,7 +47,7 @@ public class ActivityDetail extends AppCompatActivity
       }
     } else {
       //RECIPE STEP HERE
-      bundle.putParcelable(StaticValue.PARCEL_TAG_02, recipeStep);
+      bundle.putParcelable(StaticValue.KEY_OBJECT_RECIPESTEP, recipeStep);
 
       if (isTwoPanel) {
         //TODO TWO PANEL RECIPE STEP HERE
@@ -71,7 +71,7 @@ public class ActivityDetail extends AppCompatActivity
     rvwRecipeDetail.setHasFixedSize(true);
 
     if (getIntent().getExtras() != null) {
-      Recipe currentRecipe = getIntent().getExtras().getParcelable(StaticValue.PARCEL_TAG_01);
+      Recipe currentRecipe = getIntent().getExtras().getParcelable(StaticValue.KEY_OBJECT_RECIPE);
 
       if (currentRecipe != null) {
         currentRecipeListIngredients = currentRecipe.getRecipeListIngredients();
