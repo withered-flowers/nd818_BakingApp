@@ -19,63 +19,63 @@ public class Recipe implements Parcelable {
 
   @SerializedName("name")
   private String recipeName;
-  
+
   @SerializedName("ingredients")
   private List<RecipeIngredient> recipeListIngredients;
 
   @SerializedName("steps")
   private List<RecipeStep> recipeListSteps;
-  
+
   @SerializedName("servings")
   private int recipeServings;
-  
+
   @SerializedName("image")
   private String recipeImage;
 
   public int getRecipeId() {
     return recipeId;
   }
-  
+
   public void setRecipeId(int recipeId) {
     this.recipeId = recipeId;
   }
-  
+
   public String getRecipeName() {
     return recipeName;
   }
-  
+
   public void setRecipeName(String recipeName) {
     this.recipeName = recipeName;
   }
-  
+
   public List<RecipeIngredient> getRecipeListIngredients() {
     return recipeListIngredients;
   }
-  
+
   public void setRecipeListIngredients(List<RecipeIngredient> recipeListIngredients) {
     this.recipeListIngredients = recipeListIngredients;
   }
-  
+
   public List<RecipeStep> getRecipeListSteps() {
     return recipeListSteps;
   }
-  
+
   public void setRecipeListSteps(List<RecipeStep> recipeListSteps) {
     this.recipeListSteps = recipeListSteps;
   }
-  
+
   public int getRecipeServings() {
     return recipeServings;
   }
-  
+
   public void setRecipeServings(int recipeServings) {
     this.recipeServings = recipeServings;
   }
-  
+
   public String getRecipeImage() {
     return recipeImage;
   }
-  
+
   public void setRecipeImage(String recipeImage) {
     this.recipeImage = recipeImage;
   }
@@ -107,7 +107,9 @@ public class Recipe implements Parcelable {
     dest.writeString(getRecipeImage());
   }
 
-  public Recipe() {}
+  public Recipe() {
+  }
+
   public Recipe(Parcel in) {
     recipeListSteps = new ArrayList<>();
     recipeListIngredients = new ArrayList<>();

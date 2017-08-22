@@ -6,7 +6,6 @@ import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.example.standard.bakingapp.R;
 import com.example.standard.bakingapp.backend.pojo.Recipe;

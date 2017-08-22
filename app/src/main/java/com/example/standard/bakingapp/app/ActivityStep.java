@@ -1,14 +1,13 @@
 package com.example.standard.bakingapp.app;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.example.standard.bakingapp.R;
 import com.example.standard.bakingapp.backend.pojo.RecipeIngredient;
 import com.example.standard.bakingapp.backend.pojo.RecipeStep;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityStep extends AppCompatActivity {

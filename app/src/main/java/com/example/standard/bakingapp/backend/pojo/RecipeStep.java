@@ -24,39 +24,39 @@ public class RecipeStep implements Parcelable {
   public int getStepId() {
     return stepId;
   }
-  
+
   public void setStepId(int stepId) {
     this.stepId = stepId;
   }
-  
+
   public String getStepShortDescription() {
     return stepShortDescription;
   }
-  
+
   public void setStepShortDescription(String stepShortDescription) {
     this.stepShortDescription = stepShortDescription;
   }
-  
+
   public String getStepDescription() {
     return stepDescription;
   }
-  
+
   public void setStepDescription(String stepDescription) {
     this.stepDescription = stepDescription;
   }
-  
+
   public String getStepVideoURL() {
     return stepVideoURL;
   }
-  
+
   public void setStepVideoURL(String stepVideoURL) {
     this.stepVideoURL = stepVideoURL;
   }
-  
+
   public String getStepThumbnailURL() {
     return stepThumbnailURL;
   }
-  
+
   public void setStepThumbnailURL(String stepThumbnailURL) {
     this.stepThumbnailURL = stepThumbnailURL;
   }
@@ -87,7 +87,9 @@ public class RecipeStep implements Parcelable {
     dest.writeString(getStepThumbnailURL());
   }
 
-  public RecipeStep() {}
+  public RecipeStep() {
+  }
+
   public RecipeStep(Parcel in) {
     setStepId(in.readInt());
     setStepDescription(in.readString());

@@ -18,23 +18,23 @@ public class RecipeIngredient implements Parcelable {
   public float getIngredientQuantity() {
     return ingredientQuantity;
   }
-  
+
   public void setIngredientQuantity(float ingredientQuantity) {
     this.ingredientQuantity = ingredientQuantity;
   }
-  
+
   public String getIngredientMeasure() {
     return ingredientMeasure;
   }
-  
+
   public void setIngredientMeasure(String ingredientMeasure) {
     this.ingredientMeasure = ingredientMeasure;
   }
-  
+
   public String getIngredientName() {
     return ingredientName;
   }
-  
+
   public void setIngredientName(String ingredientName) {
     this.ingredientName = ingredientName;
   }
@@ -63,7 +63,9 @@ public class RecipeIngredient implements Parcelable {
     dest.writeString(getIngredientName());
   }
 
-  public RecipeIngredient() {}
+  public RecipeIngredient() {
+  }
+
   public RecipeIngredient(Parcel in) {
     setIngredientQuantity(in.readFloat());
     setIngredientMeasure(in.readString());
