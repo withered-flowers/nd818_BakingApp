@@ -30,7 +30,6 @@ public class ActivityStep extends AppCompatActivity {
   List<RecipeIngredient> recipeIngredients;
   List<RecipeStep> recipeSteps;
 
-  //TODO Implement the Movie
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
