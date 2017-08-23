@@ -7,7 +7,7 @@ package com.example.standard.bakingapp.app;
 class StaticValue {
   static final String KEY_OBJECT_RECIPE = "RECIPE";
   static final String KEY_OBJECT_RECIPESTEP = "STEP";
-  static final String KEY_OBJECT_RECIPEINGREDIENT_ARRAY = "INGREDIENT_ARRAY";
+  static final String KEY_STRING_RECIPEINGREDIENT = "INGREDIENT";
   static final String KEY_INT_POSITION_CURR = "POSITION_CURR";
   static final String KEY_INT_POSITION_MAX = "POSITION_MAX";
 }

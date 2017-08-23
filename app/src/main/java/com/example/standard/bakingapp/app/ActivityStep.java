@@ -1,34 +1,32 @@
 package com.example.standard.bakingapp.app;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.standard.bakingapp.R;
+import com.example.standard.bakingapp.backend.pojo.Recipe;
 import com.example.standard.bakingapp.backend.pojo.RecipeIngredient;
 import com.example.standard.bakingapp.backend.pojo.RecipeStep;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ActivityStep extends AppCompatActivity {
 
   Button btnPrev;
   Button btnNext;
-  LinearLayout lytTop;
-  LinearLayout lytBottom;
-  TextView tvIngredient;
+
   TextView tvStep;
 
   int currPosition;
   int maxPosition;
+  Recipe recipe;
   List<RecipeIngredient> recipeIngredients;
   List<RecipeStep> recipeSteps;
 
@@ -40,16 +38,16 @@ public class ActivityStep extends AppCompatActivity {
 
     btnPrev = (Button) findViewById(R.id.content_recipe_detail_item_right_buttonprev);
     btnNext = (Button) findViewById(R.id.content_recipe_detail_item_right_buttonnext);
-    lytTop = (LinearLayout) findViewById(R.id.content_recipe_detail_item_right_layoutrecipe);
-    lytBottom = (LinearLayout) findViewById(R.id.content_recipe_detail_item_right_layoutexoplayer);
-    tvIngredient = (TextView) findViewById(R.id.content_recipe_detail_item_right_textview_recipeingredient);
+
     tvStep = (TextView) findViewById(R.id.content_recipe_detail_item_right_textview_stepdescription);
 
     if (getIntent().getExtras() != null) {
       currPosition = getIntent().getExtras().getInt(StaticValue.KEY_INT_POSITION_CURR);
       maxPosition = getIntent().getExtras().getInt(StaticValue.KEY_INT_POSITION_MAX);
-      recipeIngredients = getIntent().getExtras().getParcelableArrayList(StaticValue.KEY_OBJECT_RECIPEINGREDIENT_ARRAY);
-      recipeSteps = getIntent().getExtras().getParcelableArrayList(StaticValue.KEY_OBJECT_RECIPESTEP);
+      recipe = getIntent().getExtras().getParcelable(StaticValue.KEY_OBJECT_RECIPE);
+
+      recipeIngredients = recipe.getRecipeListIngredients();
+      recipeSteps = recipe.getRecipeListSteps();
 
       if (currPosition == 0) {
         if (recipeIngredients != null) {
@@ -62,17 +60,34 @@ public class ActivityStep extends AppCompatActivity {
             textIngredient += recipeIngredients.get(i).getIngredientName() + "\n";
           }
 
-          tvIngredient.setText(textIngredient);
+          Fragment fr = new FragmentRecipeDetailRightText();
+
+          Bundle bundle = new Bundle();
+
+          bundle.putString(StaticValue.KEY_STRING_RECIPEINGREDIENT, textIngredient);
+
+          fr.setArguments(bundle);
+
+          FragmentManager fm = getSupportFragmentManager();
+          FragmentTransaction ft = fm.beginTransaction();
+          ft.replace(R.id.content_recipe_detail_item_right_framelayoutcontent, fr);
+          ft.commit();
         }
       } else if (currPosition > 0) {
         if (recipeSteps != null) {
           //STEP HERE
-          if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            tvStep.setText(Html.fromHtml(recipeSteps.get(currPosition - 1).getStepDescription(), Html.FROM_HTML_MODE_LEGACY));
-          }
-          else {
-            tvStep.setText(Html.fromHtml(recipeSteps.get(currPosition - 1).getStepDescription()));
-          }
+          Fragment fr = new FragmentRecipeDetailRightMovie();
+
+          Bundle bundle = new Bundle();
+
+          bundle.putParcelable(StaticValue.KEY_OBJECT_RECIPESTEP, recipeSteps.get(currPosition - 1));
+
+          fr.setArguments(bundle);
+
+          FragmentManager fm = getSupportFragmentManager();
+          FragmentTransaction ft = fm.beginTransaction();
+          ft.replace(R.id.content_recipe_detail_item_right_framelayoutcontent, fr);
+          ft.commit();
         }
       }
 
@@ -84,10 +99,9 @@ public class ActivityStep extends AppCompatActivity {
       public void onClick(View v) {
         Bundle bundle = new Bundle();
 
-        bundle.putInt(StaticValue.KEY_INT_POSITION_CURR, currPosition+1);
+        bundle.putInt(StaticValue.KEY_INT_POSITION_CURR, currPosition + 1);
         bundle.putInt(StaticValue.KEY_INT_POSITION_MAX, maxPosition);
-        bundle.putParcelableArrayList(StaticValue.KEY_OBJECT_RECIPEINGREDIENT_ARRAY, new ArrayList<Parcelable>(recipeIngredients));
-        bundle.putParcelableArrayList(StaticValue.KEY_OBJECT_RECIPESTEP, new ArrayList<Parcelable>(recipeSteps));
+        bundle.putParcelable(StaticValue.KEY_OBJECT_RECIPE, recipe);
 
         Intent i = new Intent(ActivityStep.this, ActivityStep.class);
         i.putExtras(bundle);
@@ -102,10 +116,9 @@ public class ActivityStep extends AppCompatActivity {
       public void onClick(View v) {
         Bundle bundle = new Bundle();
 
-        bundle.putInt(StaticValue.KEY_INT_POSITION_CURR, currPosition-1);
+        bundle.putInt(StaticValue.KEY_INT_POSITION_CURR, currPosition - 1);
         bundle.putInt(StaticValue.KEY_INT_POSITION_MAX, maxPosition);
-        bundle.putParcelableArrayList(StaticValue.KEY_OBJECT_RECIPEINGREDIENT_ARRAY, new ArrayList<Parcelable>(recipeIngredients));
-        bundle.putParcelableArrayList(StaticValue.KEY_OBJECT_RECIPESTEP, new ArrayList<Parcelable>(recipeSteps));
+        bundle.putParcelable(StaticValue.KEY_OBJECT_RECIPE, recipe);
 
         Intent i = new Intent(ActivityStep.this, ActivityStep.class);
         i.putExtras(bundle);
@@ -117,23 +130,13 @@ public class ActivityStep extends AppCompatActivity {
   }
 
   void setViewVisibility(int curr, int max) {
-    if(curr == 0) {
-      lytTop.setVisibility(View.VISIBLE);
-      lytBottom.setVisibility(View.INVISIBLE);
-
+    if (curr == 0) {
       btnPrev.setVisibility(View.INVISIBLE);
       btnNext.setVisibility(View.VISIBLE);
-    } else if(curr == max) {
-      lytTop.setVisibility(View.INVISIBLE);
-      lytBottom.setVisibility(View.VISIBLE);
-
+    } else if (curr == max) {
       btnPrev.setVisibility(View.VISIBLE);
       btnNext.setVisibility(View.INVISIBLE);
-    }
-    else {
-      lytTop.setVisibility(View.INVISIBLE);
-      lytBottom.setVisibility(View.VISIBLE);
-
+    } else {
       btnPrev.setVisibility(View.VISIBLE);
       btnNext.setVisibility(View.VISIBLE);
     }

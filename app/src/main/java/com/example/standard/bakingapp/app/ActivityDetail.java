@@ -25,6 +25,7 @@ public class ActivityDetail extends AppCompatActivity
   private boolean isTwoPanel;
 
   private RecyclerView rvwRecipeDetail;
+  private Recipe currentRecipe;
   private List<RecipeIngredient> currentRecipeListIngredients;
   private List<RecipeStep> currentRecipeListSteps;
 
@@ -34,8 +35,7 @@ public class ActivityDetail extends AppCompatActivity
 
     bundle.putInt(StaticValue.KEY_INT_POSITION_CURR, position);
     bundle.putInt(StaticValue.KEY_INT_POSITION_MAX, currentRecipeListSteps.size());
-    bundle.putParcelableArrayList(StaticValue.KEY_OBJECT_RECIPEINGREDIENT_ARRAY, new ArrayList<Parcelable>(currentRecipeListIngredients));
-    bundle.putParcelableArrayList(StaticValue.KEY_OBJECT_RECIPESTEP, new ArrayList<Parcelable>(currentRecipeListSteps));
+    bundle.putParcelable(StaticValue.KEY_OBJECT_RECIPE, currentRecipe);
 
     if (isTwoPanel) {
       //TWO PANEL IMPLEMENTATION
@@ -58,7 +58,7 @@ public class ActivityDetail extends AppCompatActivity
     rvwRecipeDetail.setHasFixedSize(true);
 
     if (getIntent().getExtras() != null) {
-      Recipe currentRecipe = getIntent().getExtras().getParcelable(StaticValue.KEY_OBJECT_RECIPE);
+      currentRecipe = getIntent().getExtras().getParcelable(StaticValue.KEY_OBJECT_RECIPE);
 
       if (currentRecipe != null) {
         currentRecipeListIngredients = currentRecipe.getRecipeListIngredients();
