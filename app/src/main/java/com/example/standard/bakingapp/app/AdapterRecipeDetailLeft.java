@@ -53,7 +53,7 @@ class AdapterRecipeDetailLeft extends RecyclerView.Adapter<AdapterRecipeDetailLe
       holder.tvRecipeDetail.setText(R.string.adapter_recipe_detail_left_recipeingredients);
     } else if (position > 0) {
       final RecipeStep currentRecipeStep = listRecipeStep.get(position - 1);
-      holder.tvRecipeDetail.setText(currentRecipeStep.getStepDescription());
+      holder.tvRecipeDetail.setText(currentRecipeStep.getStepShortDescription());
     }
 
     holder.vwRecipeDetail.setOnClickListener(new View.OnClickListener() {

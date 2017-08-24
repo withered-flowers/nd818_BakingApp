@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
@@ -14,14 +15,48 @@
     android:id="@+id/content_recipe_detail_framerecipe"
     android:layout_width="@dimen/item_width"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp"/>
+    android:layout_marginLeft="@dimen/layout_margin"
+    android:layout_marginRight="@dimen/layout_margin"/>
 
-  <FrameLayout
-    android:id="@+id/content_recipe_detail_framestep"
+  <android.support.constraint.ConstraintLayout
+    android:id="@+id/content_recipe_detail_constraintlayout"
     android:layout_width="0dp"
     android:layout_height="match_parent"
-    android:layout_marginEnd="16dp"
-    android:layout_marginRight="16dp"
-    android:layout_weight="3"/>
+    android:layout_marginStart="@dimen/layout_margin"
+    android:layout_marginLeft="@dimen/layout_margin"
+    android:layout_marginEnd="@dimen/layout_margin"
+    android:layout_marginRight="@dimen/layout_margin"
+    android:layout_weight="3">
+
+    <ScrollView
+      android:id="@+id/content_recipe_detail_scrollview"
+      android:layout_width="0dp"
+      android:layout_height="0dp"
+      app:layout_constraintBottom_toTopOf="@+id/content_recipe_detail_buttonprev"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+      <FrameLayout
+        android:id="@+id/content_recipe_detail_framestep"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    </ScrollView>
+
+    <Button
+      android:id="@+id/content_recipe_detail_buttonprev"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/content_recipe_detail_item_right_buttonprev"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <Button
+      android:id="@+id/content_recipe_detail_buttonnext"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/content_recipe_detail_item_right_buttonnext"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintRight_toLeftOf="parent"/>
+  </android.support.constraint.ConstraintLayout>
 </LinearLayout>
