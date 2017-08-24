@@ -82,6 +82,20 @@ public class ActivityDetail extends AppCompatActivity
           ft.commit();
         }
 
+        btnPrev.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            //TODO IMPLEMENT PREV BUTTON HERE
+          }
+        });
+
+        btnNext.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            //TODO IMPLEMENT NEXT BUTTON HERE
+          }
+        });
+
         setViewVisibility(position, currentRecipeListSteps.size());
       }
     } else {

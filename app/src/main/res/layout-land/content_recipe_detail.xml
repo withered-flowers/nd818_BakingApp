@@ -22,10 +22,10 @@
     android:id="@+id/content_recipe_detail_constraintlayout"
     android:layout_width="0dp"
     android:layout_height="match_parent"
-    android:layout_marginStart="@dimen/layout_margin"
-    android:layout_marginLeft="@dimen/layout_margin"
     android:layout_marginEnd="@dimen/layout_margin"
+    android:layout_marginLeft="@dimen/layout_margin"
     android:layout_marginRight="@dimen/layout_margin"
+    android:layout_marginStart="@dimen/layout_margin"
     android:layout_weight="3">
 
     <ScrollView
@@ -48,6 +48,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="@string/content_recipe_detail_item_right_buttonprev"
+      android:visibility="invisible"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintLeft_toLeftOf="parent"/>
 
@@ -56,6 +57,7 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="@string/content_recipe_detail_item_right_buttonnext"
+      android:visibility="invisible"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintRight_toLeftOf="parent"/>
   </android.support.constraint.ConstraintLayout>
