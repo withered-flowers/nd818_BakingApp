@@ -38,54 +38,37 @@ public class ActivityDetail extends AppCompatActivity
   private List<RecipeStep> currentRecipeListSteps;
 
   @Override
-  public void onClickAdapterRecipeDetailLeft(int position) {
-    Bundle bundle = new Bundle();
-
-    bundle.putInt(StaticValue.KEY_INT_POSITION_CURR, position);
-    bundle.putInt(StaticValue.KEY_INT_POSITION_MAX, currentRecipeListSteps.size());
-    bundle.putParcelable(StaticValue.KEY_OBJECT_RECIPE, currentRecipe);
+  public void onClickAdapterRecipeDetailLeft(final int position) {
+    Bundle bundle = initializeBundle(position);
 
     if (isTwoPanel) {
       //TWO PANEL IMPLEMENTATION
       if (findViewById(R.id.content_recipe_detail_framestep) != null) {
         if (position == 0) {
           //RECIPE INGREDIENT HERE
-          String textIngredient = "";
-
-          for (int i = 0; i < currentRecipeListIngredients.size(); i++) {
-            textIngredient += currentRecipeListIngredients.get(i).getIngredientQuantity() + " ";
-            textIngredient += currentRecipeListIngredients.get(i).getIngredientMeasure() + " of ";
-            textIngredient += currentRecipeListIngredients.get(i).getIngredientName() + "\n";
-          }
-
-          Fragment fr = new FragmentRecipeDetailRightText();
-
-          bundle.putString(StaticValue.KEY_STRING_RECIPEINGREDIENT, textIngredient);
-
-          fr.setArguments(bundle);
-
-          FragmentManager fm = getSupportFragmentManager();
-          FragmentTransaction ft = fm.beginTransaction();
-          ft.replace(R.id.content_recipe_detail_framestep, fr);
-          ft.commit();
+          initializeRecipeIngredientFragment(currentRecipeListIngredients, bundle);
         } else if (position > 0) {
           //RECIPE STEP HERE
-          Fragment fr = new FragmentRecipeDetailRightMovie();
-
-          bundle.putParcelable(StaticValue.KEY_OBJECT_RECIPESTEP, currentRecipeListSteps.get(position - 1));
-
-          fr.setArguments(bundle);
-
-          FragmentManager fm = getSupportFragmentManager();
-          FragmentTransaction ft = fm.beginTransaction();
-          ft.replace(R.id.content_recipe_detail_framestep, fr);
-          ft.commit();
+          initializeRecipeStepFragment(position, currentRecipeListSteps, bundle);
         }
 
         btnPrev.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
             //TODO IMPLEMENT PREV BUTTON HERE
+            int newPosition = position - 1;
+
+            Bundle bundle = initializeBundle(newPosition);
+
+            if (newPosition == 0) {
+              //RECIPE INGREDIENT HERE
+              initializeRecipeIngredientFragment(currentRecipeListIngredients, bundle);
+            } else if (newPosition > 0) {
+              //RECIPE STEP HERE
+              initializeRecipeStepFragment(newPosition, currentRecipeListSteps, bundle);
+            }
+
+            setViewVisibility(newPosition, currentRecipeListSteps.size());
           }
         });
 
@@ -93,6 +76,19 @@ public class ActivityDetail extends AppCompatActivity
           @Override
           public void onClick(View v) {
             //TODO IMPLEMENT NEXT BUTTON HERE
+            int newPosition = position + 1;
+
+            Bundle bundle = initializeBundle(newPosition);
+
+            if (newPosition == 0) {
+              //RECIPE INGREDIENT HERE
+              initializeRecipeIngredientFragment(currentRecipeListIngredients, bundle);
+            } else if (newPosition > 0) {
+              //RECIPE STEP HERE
+              initializeRecipeStepFragment(newPosition, currentRecipeListSteps, bundle);
+            }
+
+            setViewVisibility(newPosition, currentRecipeListSteps.size());
           }
         });
 
@@ -147,5 +143,48 @@ public class ActivityDetail extends AppCompatActivity
       btnPrev.setVisibility(View.VISIBLE);
       btnNext.setVisibility(View.VISIBLE);
     }
+  }
+
+  Bundle initializeBundle(int position) {
+    Bundle bundle = new Bundle();
+
+    bundle.putInt(StaticValue.KEY_INT_POSITION_CURR, position);
+    bundle.putInt(StaticValue.KEY_INT_POSITION_MAX, currentRecipeListSteps.size());
+    bundle.putParcelable(StaticValue.KEY_OBJECT_RECIPE, currentRecipe);
+
+    return bundle;
+  }
+
+  void initializeRecipeIngredientFragment(List<RecipeIngredient> recipeIngredients, Bundle bundle) {
+    String textIngredient = "";
+
+    for (int i = 0; i < recipeIngredients.size(); i++) {
+      textIngredient += recipeIngredients.get(i).getIngredientQuantity() + " ";
+      textIngredient += recipeIngredients.get(i).getIngredientMeasure() + " of ";
+      textIngredient += recipeIngredients.get(i).getIngredientName() + "\n";
+    }
+
+    bundle.putString(StaticValue.KEY_STRING_RECIPEINGREDIENT, textIngredient);
+
+    Fragment fr = new FragmentRecipeDetailRightText();
+    fr.setArguments(bundle);
+
+    initializeFragment(fr);
+  }
+
+  void initializeRecipeStepFragment(int position, List<RecipeStep> recipeSteps, Bundle bundle) {
+    bundle.putParcelable(StaticValue.KEY_OBJECT_RECIPESTEP, recipeSteps.get(position - 1));
+
+    Fragment fr = new FragmentRecipeDetailRightMovie();
+    fr.setArguments(bundle);
+
+    initializeFragment(fr);
+  }
+
+  void initializeFragment(Fragment fragment) {
+    FragmentManager fm = getSupportFragmentManager();
+    FragmentTransaction ft = fm.beginTransaction();
+    ft.replace(R.id.content_recipe_detail_framestep, fragment);
+    ft.commit();
   }
 }

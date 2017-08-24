@@ -67,10 +67,7 @@ public class ActivityStep extends AppCompatActivity {
 
           fr.setArguments(bundle);
 
-          FragmentManager fm = getSupportFragmentManager();
-          FragmentTransaction ft = fm.beginTransaction();
-          ft.replace(R.id.content_recipe_detail_item_right_framelayoutcontent, fr);
-          ft.commit();
+          initializeFragment(fr);
         }
       } else if (currPosition > 0) {
         if (recipeSteps != null) {
@@ -83,10 +80,7 @@ public class ActivityStep extends AppCompatActivity {
 
           fr.setArguments(bundle);
 
-          FragmentManager fm = getSupportFragmentManager();
-          FragmentTransaction ft = fm.beginTransaction();
-          ft.replace(R.id.content_recipe_detail_item_right_framelayoutcontent, fr);
-          ft.commit();
+          initializeFragment(fr);
         }
       }
 
@@ -96,34 +90,14 @@ public class ActivityStep extends AppCompatActivity {
     btnNext.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        Bundle bundle = new Bundle();
-
-        bundle.putInt(StaticValue.KEY_INT_POSITION_CURR, currPosition + 1);
-        bundle.putInt(StaticValue.KEY_INT_POSITION_MAX, maxPosition);
-        bundle.putParcelable(StaticValue.KEY_OBJECT_RECIPE, recipe);
-
-        Intent i = new Intent(ActivityStep.this, ActivityStep.class);
-        i.putExtras(bundle);
-
-        startActivity(i);
-        finish();
+        initializeButtonActivity(currPosition + 1);
       }
     });
 
     btnPrev.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        Bundle bundle = new Bundle();
-
-        bundle.putInt(StaticValue.KEY_INT_POSITION_CURR, currPosition - 1);
-        bundle.putInt(StaticValue.KEY_INT_POSITION_MAX, maxPosition);
-        bundle.putParcelable(StaticValue.KEY_OBJECT_RECIPE, recipe);
-
-        Intent i = new Intent(ActivityStep.this, ActivityStep.class);
-        i.putExtras(bundle);
-
-        startActivity(i);
-        finish();
+        initializeButtonActivity(currPosition - 1);
       }
     });
   }
@@ -139,5 +113,26 @@ public class ActivityStep extends AppCompatActivity {
       btnPrev.setVisibility(View.VISIBLE);
       btnNext.setVisibility(View.VISIBLE);
     }
+  }
+
+  void initializeButtonActivity(int position) {
+    Bundle bundle = new Bundle();
+
+    bundle.putInt(StaticValue.KEY_INT_POSITION_CURR, position);
+    bundle.putInt(StaticValue.KEY_INT_POSITION_MAX, maxPosition);
+    bundle.putParcelable(StaticValue.KEY_OBJECT_RECIPE, recipe);
+
+    Intent i = new Intent(ActivityStep.this, ActivityStep.class);
+    i.putExtras(bundle);
+
+    startActivity(i);
+    finish();
+  }
+
+  void initializeFragment(Fragment fragment) {
+    FragmentManager fm = getSupportFragmentManager();
+    FragmentTransaction ft = fm.beginTransaction();
+    ft.replace(R.id.content_recipe_detail_item_right_framelayoutcontent, fragment);
+    ft.commit();
   }
 }
