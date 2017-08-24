@@ -30,7 +30,6 @@ class AdapterRecipeDetailLeft extends RecyclerView.Adapter<AdapterRecipeDetailLe
   AdapterRecipeDetailLeft(List<RecipeStep> listRecipeStep) {
     this.listRecipeStep = new ArrayList<>();
     this.listRecipeStep.addAll(listRecipeStep);
-    Log.d(TAG, String.valueOf(listRecipeStep.size()));
   }
 
   void setOnListItemViewClick(clickHandler listener) {

@@ -2,7 +2,6 @@ package com.example.standard.bakingapp.app;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -17,7 +16,6 @@ import com.example.standard.bakingapp.backend.pojo.Recipe;
 import com.example.standard.bakingapp.backend.pojo.RecipeIngredient;
 import com.example.standard.bakingapp.backend.pojo.RecipeStep;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,6 +26,7 @@ public class ActivityDetail extends AppCompatActivity
     implements AdapterRecipeDetailLeft.clickHandler {
 
   private boolean isTwoPanel;
+  private int position;
 
   private Button btnPrev;
   private Button btnNext;
@@ -38,8 +37,10 @@ public class ActivityDetail extends AppCompatActivity
   private List<RecipeStep> currentRecipeListSteps;
 
   @Override
-  public void onClickAdapterRecipeDetailLeft(final int position) {
+  public void onClickAdapterRecipeDetailLeft(int position) {
     Bundle bundle = initializeBundle(position);
+
+    this.position = position;
 
     if (isTwoPanel) {
       //TWO PANEL IMPLEMENTATION
@@ -51,46 +52,6 @@ public class ActivityDetail extends AppCompatActivity
           //RECIPE STEP HERE
           initializeRecipeStepFragment(position, currentRecipeListSteps, bundle);
         }
-
-        btnPrev.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            //TODO IMPLEMENT PREV BUTTON HERE
-            int newPosition = position - 1;
-
-            Bundle bundle = initializeBundle(newPosition);
-
-            if (newPosition == 0) {
-              //RECIPE INGREDIENT HERE
-              initializeRecipeIngredientFragment(currentRecipeListIngredients, bundle);
-            } else if (newPosition > 0) {
-              //RECIPE STEP HERE
-              initializeRecipeStepFragment(newPosition, currentRecipeListSteps, bundle);
-            }
-
-            setViewVisibility(newPosition, currentRecipeListSteps.size());
-          }
-        });
-
-        btnNext.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            //TODO IMPLEMENT NEXT BUTTON HERE
-            int newPosition = position + 1;
-
-            Bundle bundle = initializeBundle(newPosition);
-
-            if (newPosition == 0) {
-              //RECIPE INGREDIENT HERE
-              initializeRecipeIngredientFragment(currentRecipeListIngredients, bundle);
-            } else if (newPosition > 0) {
-              //RECIPE STEP HERE
-              initializeRecipeStepFragment(newPosition, currentRecipeListSteps, bundle);
-            }
-
-            setViewVisibility(newPosition, currentRecipeListSteps.size());
-          }
-        });
 
         setViewVisibility(position, currentRecipeListSteps.size());
       }
@@ -123,11 +84,57 @@ public class ActivityDetail extends AppCompatActivity
         currentRecipeListIngredients = currentRecipe.getRecipeListIngredients();
         currentRecipeListSteps = currentRecipe.getRecipeListSteps();
 
-        AdapterRecipeDetailLeft adpRecipeDetail_Left = new AdapterRecipeDetailLeft(currentRecipeListSteps);
+        final AdapterRecipeDetailLeft adpRecipeDetail_Left = new AdapterRecipeDetailLeft(currentRecipeListSteps);
         adpRecipeDetail_Left.setOnListItemViewClick(ActivityDetail.this);
 
         rvwRecipeDetail.setLayoutManager(new LinearLayoutManager(this));
         rvwRecipeDetail.setAdapter(adpRecipeDetail_Left);
+
+        if(isTwoPanel) {
+          btnPrev.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              int newPosition = position - 1;
+
+              Bundle bundle = initializeBundle(newPosition);
+
+              if (newPosition == 0) {
+                //RECIPE INGREDIENT HERE
+                initializeRecipeIngredientFragment(currentRecipeListIngredients, bundle);
+              } else if (newPosition > 0) {
+                //RECIPE STEP HERE
+                initializeRecipeStepFragment(newPosition, currentRecipeListSteps, bundle);
+              }
+
+              onClickAdapterRecipeDetailLeft(newPosition);
+              adpRecipeDetail_Left.notifyDataSetChanged();
+
+              setViewVisibility(newPosition, currentRecipeListSteps.size());
+            }
+          });
+
+          btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              int newPosition = position + 1;
+
+              Bundle bundle = initializeBundle(newPosition);
+
+              if (newPosition == 0) {
+                //RECIPE INGREDIENT HERE
+                initializeRecipeIngredientFragment(currentRecipeListIngredients, bundle);
+              } else if (newPosition > 0) {
+                //RECIPE STEP HERE
+                initializeRecipeStepFragment(newPosition, currentRecipeListSteps, bundle);
+              }
+
+              onClickAdapterRecipeDetailLeft(newPosition);
+              adpRecipeDetail_Left.notifyDataSetChanged();
+
+              setViewVisibility(newPosition, currentRecipeListSteps.size());
+            }
+          });
+        }
       }
     }
   }
