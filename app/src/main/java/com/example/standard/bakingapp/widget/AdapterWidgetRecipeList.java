@@ -16,10 +16,20 @@ import java.util.List;
  */
 
 class AdapterWidgetRecipeList extends RecyclerView.Adapter<AdapterWidgetRecipeList.AdapterWidgetRecipeListViewHolder> {
+
+  private clickHandler listener;
   private List<Recipe> listRecipe;
+
+  interface clickHandler {
+    void onClickAdapterWidgetRecipeList(Recipe obj);
+  }
 
   AdapterWidgetRecipeList(List<Recipe> listRecipe) {
     this.listRecipe = listRecipe;
+  }
+
+  void setViewOnClick(clickHandler listener) {
+    this.listener = listener;
   }
 
   @Override
@@ -33,10 +43,18 @@ class AdapterWidgetRecipeList extends RecyclerView.Adapter<AdapterWidgetRecipeLi
   }
 
   @Override
-  public void onBindViewHolder(AdapterWidgetRecipeListViewHolder holder, int position) {
+  public void onBindViewHolder(final AdapterWidgetRecipeListViewHolder holder, int position) {
     Recipe currentRecipe = listRecipe.get(position);
 
     holder.tvWidgetRecipeText.setText(currentRecipe.getRecipeName());
+    holder.vwWidgetRecipeContainer.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        if (listener != null) {
+          listener.onClickAdapterWidgetRecipeList(listRecipe.get(holder.getAdapterPosition()));
+        }
+      }
+    });
   }
 
   @Override
