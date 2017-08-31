@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical"
+              android:padding="16dp">
+
+  <android.support.v7.widget.RecyclerView
+    android:id="@+id/widget_recipe_configure_recyclerview"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/layout_margin"
+    android:layout_marginLeft="@dimen/layout_margin"
+    android:layout_marginRight="@dimen/layout_margin"
+    android:layout_marginStart="@dimen/layout_margin">
+
+  </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>
