@@ -159,12 +159,31 @@ public class FragmentRecipeDetailRightMovie extends Fragment {
     return parent;
   }
 
-  @Override
-  public void onDestroy() {
-    super.onDestroy();
 
-    if(exoPlayer != null) {
-      exoPlayer.release();
+  @Override
+  public void onPause() {
+    super.onPause();
+
+    //Under SDK 24 must be release onPause
+    if (Util.SDK_INT <= 23) {
+      if (exoPlayer != null) {
+        exoPlayer.release();
+        exoPlayer = null;
+      }
+    }
+  }
+
+  @Override
+  public void onStop() {
+    super.onStop();
+
+    //SDK 24+ must be release onStop
+
+    if (Util.SDK_INT > 23) {
+      if (exoPlayer != null) {
+        exoPlayer.release();
+        exoPlayer = null;
+      }
     }
   }
 }
