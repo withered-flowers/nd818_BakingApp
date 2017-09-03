@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +15,29 @@ import android.widget.TextView;
 import com.example.standard.bakingapp.R;
 import com.example.standard.bakingapp.backend.pojo.RecipeStep;
 import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.ExoPlaybackException;
+import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.LoadControl;
+import com.google.android.exoplayer2.PlaybackParameters;
 import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.TrackGroupArray;
+import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelection;
+import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.ui.SimpleExoPlayerView;
+import com.google.android.exoplayer2.upstream.BandwidthMeter;
+import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by standard on 8/23/17.
@@ -61,7 +74,9 @@ public class FragmentRecipeDetailRightMovie extends Fragment {
 
           //Initialize ExoPlayer & Media Source
           //Track Selector
-          TrackSelector trackSelector = new DefaultTrackSelector();
+          BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+          TrackSelection.Factory videoTrackSelectionFactory = new AdaptiveTrackSelection.Factory(bandwidthMeter);
+          TrackSelector trackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
 
           //Load Control
           LoadControl loadControl = new DefaultLoadControl();
@@ -85,9 +100,50 @@ public class FragmentRecipeDetailRightMovie extends Fragment {
               null
           );
 
+          //Prepare and Binding ExoPlayer
           exoPlayer.prepare(mediaSource);
+
+          exoPlayer.addListener(new ExoPlayer.EventListener() {
+            @Override
+            public void onTimelineChanged(Timeline timeline, Object manifest) {
+
+            }
+
+            @Override
+            public void onTracksChanged(TrackGroupArray trackGroups, TrackSelectionArray trackSelections) {
+
+            }
+
+            @Override
+            public void onLoadingChanged(boolean isLoading) {
+
+            }
+
+            @Override
+            public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+
+            }
+
+            @Override
+            public void onPlayerError(ExoPlaybackException error) {
+              Log.e(TAG, "onPlayerError");
+              exoPlayer.stop();
+            }
+
+            @Override
+            public void onPositionDiscontinuity() {
+
+            }
+
+            @Override
+            public void onPlaybackParametersChanged(PlaybackParameters playbackParameters) {
+
+            }
+          });
+
+
           exoPlayer.setPlayWhenReady(true);
-          //End of Exoplayer & Media Source
+          //End of ExoPlayer & Media Source
 
           exoPlayerView.setVisibility(View.VISIBLE);
         }
@@ -101,5 +157,14 @@ public class FragmentRecipeDetailRightMovie extends Fragment {
     }
 
     return parent;
+  }
+
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+
+    if(exoPlayer != null) {
+      exoPlayer.release();
+    }
   }
 }
