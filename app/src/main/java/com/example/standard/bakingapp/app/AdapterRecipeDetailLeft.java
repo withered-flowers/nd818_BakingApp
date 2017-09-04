@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.standard.bakingapp.R;
 import com.example.standard.bakingapp.backend.pojo.RecipeStep;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +58,10 @@ class AdapterRecipeDetailLeft extends RecyclerView.Adapter<AdapterRecipeDetailLe
       holder.tvRecipeDetail.setText(currentRecipeStep.getStepShortDescription());
 
       if(!(currentRecipeStep.getStepThumbnailURL().equals(""))) {
-        holder.imgRecipeDetail.setImageResource(R.drawable.ic_birthday);
+        Picasso
+          .with(holder.imgRecipeDetail.getContext())
+          .load(currentRecipeStep.getStepThumbnailURL())
+          .into(holder.imgRecipeDetail);
       }
       else {
         holder.imgRecipeDetail.setImageResource(R.drawable.ic_birthday_notfound);
