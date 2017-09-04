@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.standard.bakingapp.R;
@@ -50,9 +51,17 @@ class AdapterRecipeDetailLeft extends RecyclerView.Adapter<AdapterRecipeDetailLe
   public void onBindViewHolder(final AdapterRecipeDetailLeftViewHolder holder, int position) {
     if (position == 0) {
       holder.tvRecipeDetail.setText(R.string.adapter_recipe_detail_left_recipeingredients);
+      holder.imgRecipeDetail.setImageResource(R.mipmap.ic_launcher_round);
     } else if (position > 0) {
       final RecipeStep currentRecipeStep = listRecipeStep.get(position - 1);
       holder.tvRecipeDetail.setText(currentRecipeStep.getStepShortDescription());
+
+      if(!(currentRecipeStep.getStepThumbnailURL().equals(""))) {
+        holder.imgRecipeDetail.setImageResource(R.drawable.ic_birthday);
+      }
+      else {
+        holder.imgRecipeDetail.setImageResource(R.drawable.ic_birthday_notfound);
+      }
     }
 
     holder.vwRecipeDetail.setOnClickListener(new View.OnClickListener() {
@@ -72,12 +81,14 @@ class AdapterRecipeDetailLeft extends RecyclerView.Adapter<AdapterRecipeDetailLe
 
   class AdapterRecipeDetailLeftViewHolder extends RecyclerView.ViewHolder {
     final View vwRecipeDetail;
+    final ImageView imgRecipeDetail;
     final TextView tvRecipeDetail;
 
     AdapterRecipeDetailLeftViewHolder(View itemView) {
       super(itemView);
 
       vwRecipeDetail = itemView.findViewById(R.id.content_recipe_detail_item_left_container);
+      imgRecipeDetail = (ImageView) itemView.findViewById(R.id.content_recipe_detail_item_left_imageview);
       tvRecipeDetail = (TextView) itemView.findViewById(R.id.content_recipe_detail_item_left_textview);
     }
   }
