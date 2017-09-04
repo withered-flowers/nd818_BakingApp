@@ -13,6 +13,8 @@
   <string name="content_recipe_detail_item_right_buttonprev">Prev</string>
   <string name="content_recipe_detail_item_right_buttonnext">Next</string>
 
+  <string name="content_recipe_list_item_imageview_contentdesc">Recipe</string>
+
   <string name="appwidget_text">Recipe Ingredient</string>
   <string name="configure">Configure</string>
   <string name="add_widget">Add widget</string>

@@ -5,10 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.standard.bakingapp.R;
 import com.example.standard.bakingapp.backend.pojo.Recipe;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -44,6 +46,16 @@ class AdapterRecipeList extends RecyclerView.Adapter<AdapterRecipeList.AdapterRe
     final Recipe currentRecipe = listRecipe.get(position);
 
     holder.cardRecipeText.setText(currentRecipe.getRecipeName());
+
+    if (!(currentRecipe.getRecipeImage().equals(""))) {
+      Picasso
+          .with(holder.cardRecipeImage.getContext())
+          .load(currentRecipe.getRecipeImage())
+          .into(holder.cardRecipeImage);
+    } else {
+      holder.cardRecipeImage.setImageResource(R.drawable.ic_birthday);
+    }
+
     holder.cardRecipe.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -61,12 +73,14 @@ class AdapterRecipeList extends RecyclerView.Adapter<AdapterRecipeList.AdapterRe
 
   class AdapterRecipeListViewHolder extends RecyclerView.ViewHolder {
     final CardView cardRecipe;
+    final ImageView cardRecipeImage;
     final TextView cardRecipeText;
 
     AdapterRecipeListViewHolder(View itemView) {
       super(itemView);
 
       cardRecipe = (CardView) itemView.findViewById(R.id.content_recipe_list_item_cardrecipe);
+      cardRecipeImage = (ImageView) itemView.findViewById(R.id.content_recipe_list_item_cardrecipe_image);
       cardRecipeText = (TextView) itemView.findViewById(R.id.content_recipe_list_item_cardrecipe_text);
     }
   }
