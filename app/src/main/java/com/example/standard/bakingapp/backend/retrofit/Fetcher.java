@@ -6,7 +6,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Fetcher {
   final String BASE_URL = "http://go.udacity.com/";
-  
+
+  //Make OkHttpClient for enable redirect page
   OkHttpClient client = new OkHttpClient.Builder()
       .followRedirects(true)
       .followSslRedirects(true)

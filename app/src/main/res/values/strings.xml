@@ -2,6 +2,7 @@
   <string name="app_name">Baking App</string>
 
   <string name="activity_main_no_internet">Internet is not Connected !</string>
+  <string name="activity_main_with_internet">Internet is Connected !</string>
 
   <string name="activity_detail_title">Recipe Detail</string>
   <string name="activity_detail_textview_ingredient">Ingredients</string>

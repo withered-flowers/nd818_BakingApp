@@ -62,6 +62,8 @@ public class ActivityMain extends AppCompatActivity
     boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
 
     if(isConnected) {
+      showSnackbar(getResources().getString(R.string.activity_main_with_internet));
+
     /* Fetch API Content Here */
       Fetcher theFetcher = new Fetcher();
       APIEndpoint theEndpoint = theFetcher.getFetcher().create(APIEndpoint.class);

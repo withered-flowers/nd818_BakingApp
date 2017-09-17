@@ -141,7 +141,6 @@ public class FragmentRecipeDetailRightMovie extends Fragment {
             }
           });
 
-
           exoPlayer.setPlayWhenReady(true);
           //End of ExoPlayer & Media Source
 
